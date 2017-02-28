@@ -31,7 +31,7 @@ def auto_canny(image, sigma=0.33):
 
 
 #read in the image
-orig = read_image('test4.png')
+orig = read_image('test.png')
 gray = cv2.cvtColor(orig, cv2.COLOR_RGB2GRAY)
 
 # create a CLAHE object (Arguments are optional).
@@ -43,7 +43,7 @@ hist = cv2.calcHist([cl1],[0],None,[256],[0,256])
 plt.plot(hist)
 # getting the max not including the 0 index
 max_hist = np.argmax(hist[1:])
-print max_hist
+# print max_hist
 
 ret,thresh = cv2.threshold(cl1, max_hist + 20, 100, cv2.THRESH_BINARY)
 thresh = cv2.medianBlur(thresh, 9)
@@ -63,11 +63,9 @@ im2, contours, hierarchy = cv2.findContours(morph,
                                            cv2.RETR_TREE,
                                            cv2.CHAIN_APPROX_SIMPLE)
 
-# for cnt in contours:
-#     area = cv2.contourArea(cnt)
-#     if area < 1000 and area > 100:
-cv2.drawContours(morph_rgb, contours, -1, (0, 255, 0), 3)
+cv2.drawContours(orig, [contours[5]], -1, (0, 255, 0), 3)
+print contours[0]
 
 plt.figure()
-plt.imshow(morph_rgb, interpolation = 'none')
+plt.imshow(orig, interpolation = 'none')
 plt.show()
